@@ -127,7 +127,7 @@ async def ask(ctx, *args):
                 raise CustomException('Your request contain inappropriate content!')
 
             embed = discord.Embed(title='🕐 Awating.... 🕐', description='>Please wait on OpenAI to respond, Thanks \n>You will be mentioned')
-            msg = await ctx.reply("", embed=embed)
+            msg = await ctx.reply("Bip Bop ....")
             response = openai.Completion.create(
                 engine=random.choice(txtmodels),
                 prompt=" ".join(args[:]),
@@ -144,7 +144,7 @@ async def ask(ctx, *args):
             await msg.delete()
             embed = discord.Embed(title='📜 Generated Text 📜', description=response.choices[0].text)
             embed.set_footer(text=f"Model: {response.model}")
-            msg = await ctx.reply("", embed=embed)
+            msg = await ctx.reply(response.choices[0].text)
         else:
             embed = discord.Embed(title='🟨 Warning 🟨', description='>To your request you dont add the arguments \n>❌ .ask \n>✅ .ask Whats the weather in London?')
             msg = await ctx.reply("", embed=embed)
