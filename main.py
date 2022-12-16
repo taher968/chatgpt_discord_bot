@@ -163,7 +163,7 @@ async def img(ctx, *args):
                 raise CustomException('Your request contain inappropriate content!')
             
             embed = discord.Embed(title='🕐 Awating.... 🕐', description='>Please wait on OpenAI to respond, Thanks\n>You will be mentioned\n>If your request will be awaited longer than expected, try: Request less difficult image')
-            msg = await ctx.reply("", embed=embed)
+            msg = await ctx.reply("Bip Bop ....")
             response = openai.Image.create(
                 prompt=" ".join(args[:]),
                 n=1,
