@@ -17,7 +17,7 @@ OwnerID = get_userid()
 
 openai.api_key = AItoken
 
-prefix = "!chat"
+prefix = "."
 
 txtmodels=['text-davinci-003']
 
