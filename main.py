@@ -109,7 +109,7 @@ async def maintenance(ctx):
 
 @bot.command()
 async def help(ctx):
-    embed = discord.Embed(title='❔ Help ❔', description='> :one: .ask *Content* | Reply to Content\n> :two: .img *Content* | Create images with requested content\n> :three: .imgVar (Attach Picture) | Create different picture with same content')
+    embed = discord.Embed(title='❔ Help ❔', description='> :one: .ask *Content* | Reply to Content\n>')
     msg = await ctx.reply("", embed=embed)
 
 @bot.command()
@@ -153,71 +153,71 @@ async def ask(ctx, *args):
           embed.set_footer(text=e)
           msg = await ctx.reply("", embed=embed)
 
-@bot.command()
-async def img(ctx, *args):
-    try:
-        if args:
-            res = any(ele in " ".join(args[:]) for ele in getfilter())
-            if str(res) == "True":
-                print(f"Inappropriate content blocked \n")
-                raise CustomException('Your request contain inappropriate content!')
+# @bot.command()
+# async def img(ctx, *args):
+#     try:
+#         if args:
+#             res = any(ele in " ".join(args[:]) for ele in getfilter())
+#             if str(res) == "True":
+#                 print(f"Inappropriate content blocked \n")
+#                 raise CustomException('Your request contain inappropriate content!')
             
-            embed = discord.Embed(title='🕐 Awating.... 🕐', description='>Please wait on OpenAI to respond, Thanks\n>You will be mentioned\n>If your request will be awaited longer than expected, try: Request less difficult image')
-            msg = await ctx.reply("Bip Bop ....")
-            response = openai.Image.create(
-                prompt=" ".join(args[:]),
-                n=1,
-                size="1024x1024"
-            )
+#             embed = discord.Embed(title='🕐 Awating.... 🕐', description='>Please wait on OpenAI to respond, Thanks\n>You will be mentioned\n>If your request will be awaited longer than expected, try: Request less difficult image')
+#             msg = await ctx.reply("Bip Bop ....")
+#             response = openai.Image.create(
+#                 prompt=" ".join(args[:]),
+#                 n=1,
+#                 size="1024x1024"
+#             )
 
-            image_url = response['data'][0]['url']
-            ##print(" ".join(args[:]))
-            channel = discord.utils.get(ctx.guild.channels, name=ctx.channel.name)
-            now = datetime.datetime.now()
-            print("------------\n>Request: " +" ".join(args[:]) + " \n>Respond: " + image_url + f"\n>Time: {str(now)}" + "\n>Model: DALLE2-ImageGeneration" + "\n>User: " + ctx.author.name + "#" + ctx.author.discriminator + f"\n>User ID: {ctx.author.id}" + "\n>Channel: " +  ctx.channel.name + f"\n>Channel ID: {channel.id}" + f"\n>Server: {ctx.guild.name}" + f"\n>Server ID: {ctx.guild.id}\n------------" )
-            with open('log.txt', 'a') as f:
-             f.write("------------\n>Request: " +" ".join(args[:]) + " \n>Respond: " + image_url + f"\n>Time: {str(now)}" + "\n>Model: DALLE2-ImageGeneration" + "\n>User: " + ctx.author.name + "#" + ctx.author.discriminator + f"\n>User ID: {ctx.author.id}" + "\n>Channel: " +  ctx.channel.name + f"\n>Channel ID: {channel.id}" + f"\n>Server: {ctx.guild.name}" + f"\n>Server ID: {ctx.guild.id}\n------------")
-            await ctx.reply(image_url)
-            await msg.delete()
-        else:
-            embed = discord.Embed(title='🟨 Warning 🟨', description='>To your request you dont add the arguments \n>❌ .img \n>✅ .img Dog')
-            msg = await ctx.reply("", embed=embed)
-    except Exception as e:
-         embed = discord.Embed(title='🟥 Unknow Error! 🟥', description='>Image to your Request was generating too long! \n>Try to remove Details from your request')
-         embed.set_footer(text=e)
-         msg = await ctx.reply("", embed=embed)
+#             image_url = response['data'][0]['url']
+#             ##print(" ".join(args[:]))
+#             channel = discord.utils.get(ctx.guild.channels, name=ctx.channel.name)
+#             now = datetime.datetime.now()
+#             print("------------\n>Request: " +" ".join(args[:]) + " \n>Respond: " + image_url + f"\n>Time: {str(now)}" + "\n>Model: DALLE2-ImageGeneration" + "\n>User: " + ctx.author.name + "#" + ctx.author.discriminator + f"\n>User ID: {ctx.author.id}" + "\n>Channel: " +  ctx.channel.name + f"\n>Channel ID: {channel.id}" + f"\n>Server: {ctx.guild.name}" + f"\n>Server ID: {ctx.guild.id}\n------------" )
+#             with open('log.txt', 'a') as f:
+#              f.write("------------\n>Request: " +" ".join(args[:]) + " \n>Respond: " + image_url + f"\n>Time: {str(now)}" + "\n>Model: DALLE2-ImageGeneration" + "\n>User: " + ctx.author.name + "#" + ctx.author.discriminator + f"\n>User ID: {ctx.author.id}" + "\n>Channel: " +  ctx.channel.name + f"\n>Channel ID: {channel.id}" + f"\n>Server: {ctx.guild.name}" + f"\n>Server ID: {ctx.guild.id}\n------------")
+#             await ctx.reply(image_url)
+#             await msg.delete()
+#         else:
+#             embed = discord.Embed(title='🟨 Warning 🟨', description='>To your request you dont add the arguments \n>❌ .img \n>✅ .img Dog')
+#             msg = await ctx.reply("", embed=embed)
+#     except Exception as e:
+#          embed = discord.Embed(title='🟥 Unknow Error! 🟥', description='>Image to your Request was generating too long! \n>Try to remove Details from your request')
+#          embed.set_footer(text=e)
+#          msg = await ctx.reply("", embed=embed)
 
-@bot.command()
-async def imgVar(ctx):
-    try:
-        if ctx.message.attachments:
-            embed = discord.Embed(title='🕐 Awating.... 🕐', description='>Please wait on OpenAI to respond, Thanks \n>You will be mentioned')
-            msg = await ctx.reply("", embed=embed)
-            attachment = ctx.message.attachments[0]
-            img_data = requests.get(attachment.url).content
-            with open('ImageGet.png', 'wb') as handler:
-                handler.write(img_data)
+# @bot.command()
+# async def imgVar(ctx):
+#     try:
+#         if ctx.message.attachments:
+#             embed = discord.Embed(title='🕐 Awating.... 🕐', description='>Please wait on OpenAI to respond, Thanks \n>You will be mentioned')
+#             msg = await ctx.reply("", embed=embed)
+#             attachment = ctx.message.attachments[0]
+#             img_data = requests.get(attachment.url).content
+#             with open('ImageGet.png', 'wb') as handler:
+#                 handler.write(img_data)
 
-            response = openai.Image.create_variation(
-                image=open('ImageGet.png', 'rb'),
-                n=1,
-                size="512x512"
-            )
-            image_url = response['data'][0]['url']
-            channel = discord.utils.get(ctx.guild.channels, name=ctx.channel.name)
-            now = datetime.datetime.now()
-            print("------------\n>Request: " + attachment.url + " \n>Respond: " + image_url + f"\n>Time: {str(now)}" + "\n>Model: DALLE2-ImageVariations" + "\n>User: " + ctx.author.name + "#" + ctx.author.discriminator + f"\n>User ID: {ctx.author.id}" + "\n>Channel: " +  ctx.channel.name + f"\n>Channel ID: {channel.id}" + f"\n>Server: {ctx.guild.name}" + f"\n>Server ID: {ctx.guild.id}\n------------" )
-            with open('log.txt', 'a') as f:
-             f.write("------------\n>Request: " + attachment.url + " \n>Respond: " + image_url + f"\n>Time: {str(now)}" + "\n>Model: DALLE2-ImageVariations" + "\n>User: " + ctx.author.name + "#" + ctx.author.discriminator + f"\n>User ID: {ctx.author.id}" + "\n>Channel: " +  ctx.channel.name + f"\n>Channel ID: {channel.id}" + f"\n>Server: {ctx.guild.name}" + f"\n>Server ID: {ctx.guild.id}\n------------")
-            await ctx.reply(image_url)
-            await msg.delete()
-        else:
-            embed = discord.Embed(title='🟨 Warning 🟨', description='>To your request you dont add the Attachment \n>❌ .imgVar (without Attachment) \n>✅ .img Dog (Added Attachment)')
-            msg = await ctx.reply("", embed=embed)
-    except Exception as e:
-            print(ctx.message.attachments)
-            embed = discord.Embed(title='🟥 Unknow Error! 🟥', description='>Check if you add image\n>Check if the image is PNG and have less than 4MB\n>Great works with .img Generated Pictures',)
-            embed.set_footer(text=e)
-            msg = await ctx.reply("", embed=embed)
+#             response = openai.Image.create_variation(
+#                 image=open('ImageGet.png', 'rb'),
+#                 n=1,
+#                 size="512x512"
+#             )
+#             image_url = response['data'][0]['url']
+#             channel = discord.utils.get(ctx.guild.channels, name=ctx.channel.name)
+#             now = datetime.datetime.now()
+#             print("------------\n>Request: " + attachment.url + " \n>Respond: " + image_url + f"\n>Time: {str(now)}" + "\n>Model: DALLE2-ImageVariations" + "\n>User: " + ctx.author.name + "#" + ctx.author.discriminator + f"\n>User ID: {ctx.author.id}" + "\n>Channel: " +  ctx.channel.name + f"\n>Channel ID: {channel.id}" + f"\n>Server: {ctx.guild.name}" + f"\n>Server ID: {ctx.guild.id}\n------------" )
+#             with open('log.txt', 'a') as f:
+#              f.write("------------\n>Request: " + attachment.url + " \n>Respond: " + image_url + f"\n>Time: {str(now)}" + "\n>Model: DALLE2-ImageVariations" + "\n>User: " + ctx.author.name + "#" + ctx.author.discriminator + f"\n>User ID: {ctx.author.id}" + "\n>Channel: " +  ctx.channel.name + f"\n>Channel ID: {channel.id}" + f"\n>Server: {ctx.guild.name}" + f"\n>Server ID: {ctx.guild.id}\n------------")
+#             await ctx.reply(image_url)
+#             await msg.delete()
+#         else:
+#             embed = discord.Embed(title='🟨 Warning 🟨', description='>To your request you dont add the Attachment \n>❌ .imgVar (without Attachment) \n>✅ .img Dog (Added Attachment)')
+#             msg = await ctx.reply("", embed=embed)
+#     except Exception as e:
+#             print(ctx.message.attachments)
+#             embed = discord.Embed(title='🟥 Unknow Error! 🟥', description='>Check if you add image\n>Check if the image is PNG and have less than 4MB\n>Great works with .img Generated Pictures',)
+#             embed.set_footer(text=e)
+#             msg = await ctx.reply("", embed=embed)
 
 bot.run(DCtoken)
